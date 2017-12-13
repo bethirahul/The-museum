@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using NUnit.Framework.Internal.Commands;
 
 public class class_gameLogic : MonoBehaviour
 {
@@ -22,9 +23,10 @@ public class class_gameLogic : MonoBehaviour
 	public GameObject GO_welcomeScreen;
 	public GameObject GO_infoScreen1;
 	public GameObject GO_infoScreen2;
+
 	
 	//   S T A R T                                                                                                      
-	void Start ()
+	void Start()
 	{
 		arr_point    = new Vector3[9];
 		arr_point[0] = GO_entrance.transform.position;
@@ -60,16 +62,37 @@ public class class_gameLogic : MonoBehaviour
 	{
 		GO_infoScreen1.SetActive(false);
 		GO_infoScreen2.SetActive(true);
-		/// iTween
+		fn_movePlayerToPoint(arr_point[1]);
+	}
+
+	//   P L A Y E R   M O V E M E N T   //
+	/// iTween movement to a point
+	private void fn_movePlayerToPoint(Vector3 point)
+	{
+		iTween.MoveTo
+		(
+			GO_player,
+			iTween.Hash
+			(
+				"position", point,
+				"time", 2,
+				"easetype", "linear"
+			)
+		);
 	}
 	
 	//   U P D A T E                                                                                                    
-	void Update ()
+	void Update()
 	{
 		/// To quit the application when X button is pressed
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
         	Application.Quit();
+    	}
+
+		if(Input.GetMouseButton(0))
+		{
+        	
     	}
 	}
 }
