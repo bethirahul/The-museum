@@ -6,19 +6,10 @@ using NUnit.Framework.Internal.Commands;
 
 public class class_gameLogic : MonoBehaviour
 {
-	public GameObject GO_entrance; 	/// 0
-	public GameObject GO_first;		/// 1
-	public GameObject GO_first_1;   /// 2
-	public GameObject GO_second;    /// 3
-	public GameObject GO_third;     /// 4
-	public GameObject GO_fourth;    /// 5
-	public GameObject GO_fifth;     /// 6
-	public GameObject GO_fifth_1;   /// 7
-	public GameObject GO_fifth_2;   /// 8
-
-	private Vector3[] arr_point;
+	public GameObject[] arr_GO_orb;
 
 	public GameObject GO_player;
+	public float float_playerHeight;
 
 	public GameObject GO_welcomeScreen;
 	public GameObject GO_infoScreen1;
@@ -28,24 +19,16 @@ public class class_gameLogic : MonoBehaviour
 	//   S T A R T                                                                                                      
 	void Start()
 	{
-		arr_point    = new Vector3[9];
-		arr_point[0] = GO_entrance.transform.position;
-		arr_point[1] = GO_first.transform.position;
-		arr_point[2] = GO_first_1.transform.position;
-		arr_point[3] = GO_second.transform.position;
-		arr_point[4] = GO_third.transform.position;
-		arr_point[5] = GO_fourth.transform.position;
-		arr_point[6] = GO_fifth.transform.position;
-		arr_point[7] = GO_fifth_1.transform.position;
-		arr_point[8] = GO_fifth_2.transform.position;
-
 		fn_initGame();
 	}
 
 	//   I N I T           
 	private void fn_initGame()
 	{
-		GO_player.transform.position = arr_point[0];
+		Vector3 l_vec3_pos = arr_GO_orb[0].transform.position;
+		l_vec3_pos.y = float_playerHeight;
+		GO_player.transform.position = l_vec3_pos;
+
 		GO_welcomeScreen.SetActive(true);
 		GO_infoScreen1.SetActive(false);
 		GO_infoScreen2.SetActive(false);
@@ -56,25 +39,33 @@ public class class_gameLogic : MonoBehaviour
 	{
 		GO_welcomeScreen.SetActive(false);
 		GO_infoScreen1.SetActive(true);
+
+		for(int i = 0; i < arr_GO_orb.Length; i++)
+		{
+			///arr_GO_orb[i].GetComponent<class_orb>().fn_initOrb();
+			arr_GO_orb[i].GetComponent<class_orb>().int_id = i;
+		}
 	}
 
 	public void fn_letsGoButton()
 	{
 		GO_infoScreen1.SetActive(false);
 		GO_infoScreen2.SetActive(true);
-		fn_movePlayerToPoint(arr_point[1]);
+		fn_movePlayerToPoint(arr_GO_orb[1].transform.position);
 	}
 
 	//   P L A Y E R   M O V E M E N T   //
 	/// iTween movement to a point
-	private void fn_movePlayerToPoint(Vector3 point)
+	private void fn_movePlayerToPoint(Vector3 p_point)
 	{
+		p_point.y = float_playerHeight;
+		
 		iTween.MoveTo
 		(
 			GO_player,
 			iTween.Hash
 			(
-				"position", point,
+				"position", p_point,
 				"time", 2,
 				"easetype", "linear"
 			)

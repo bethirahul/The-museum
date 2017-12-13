@@ -8,6 +8,7 @@ public class class_orb : MonoBehaviour
 	public Material mat_normal;
 	public Material mat_glow;
 	private Renderer rend;
+	public int int_id;
 
 	public GameObject GO_gameLogic;
 
@@ -15,6 +16,7 @@ public class class_orb : MonoBehaviour
 	{
 		/// Get the renderer of the ball
 		rend = GetComponent<Renderer>();
+		int_id = -1;
 	}
 
 	public void fn_initOrb()
@@ -25,11 +27,16 @@ public class class_orb : MonoBehaviour
 	public void fn_click()
 	{
 		/// call function from GO_gameLogic
+		/// GO_gameLogic.GetComponent<class_gameLogic>().fn_
 	}
-	
-	//   U P D A T E                                                                                                    
-	void Update()
+
+	public void fn_pointerEnter()
 	{
-		/// if hovering, then change material
+		rend.material = mat_glow;
+	}
+
+	public void fn_pointerExit()
+	{
+		rend.material = mat_normal;
 	}
 }
