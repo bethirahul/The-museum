@@ -66,6 +66,10 @@ public class class_gameLogic : MonoBehaviour
 	//   U P D A T E                                                                                                    
 	void Update ()
 	{
-		
+		/// To quit the application when X button is pressed
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+        	Application.Quit();
+    	}
 	}
 }
