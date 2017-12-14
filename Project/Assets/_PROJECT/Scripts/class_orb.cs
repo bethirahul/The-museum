@@ -9,6 +9,7 @@ public class class_orb : MonoBehaviour
 	public Material mat_glow;
 	private Renderer rend;
 	public int int_id;
+	public AudioSource audioSource;
 
 	public GameObject GO_gameLogic;
 
@@ -26,8 +27,8 @@ public class class_orb : MonoBehaviour
 
 	public void fn_click()
 	{
-		/// call function from GO_gameLogic
-		/// GO_gameLogic.GetComponent<class_gameLogic>().fn_
+		audioSource.Play();
+		GO_gameLogic.GetComponent<class_gameLogic>().fn_clickedOrb(this.transform.position, int_id);
 	}
 
 	public void fn_pointerEnter()
