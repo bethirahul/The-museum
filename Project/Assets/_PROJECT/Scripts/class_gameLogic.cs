@@ -142,12 +142,19 @@ public class class_gameLogic : MonoBehaviour
 			GO_welcomeScreen.SetActive(true);
 			GO_exitScreen.SetActive(true);
 		}
+
+		fn_playVideo();
 	}
 
 	private void fn_disableAllOrbs()
 	{
 		for(int i = 0; i < arr_GO_orb.Length; i++)
 			arr_GO_orb[i].SetActive(false);
+	}
+
+	private void fn_playVideo()
+	{
+		
 	}
 	
 	//   U P D A T E                                                                                                    
