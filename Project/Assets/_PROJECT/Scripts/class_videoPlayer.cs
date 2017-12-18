@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using GoogleVR.VideoDemo;
 
 public class class_videoPlayer : MonoBehaviour
 {
@@ -17,27 +16,25 @@ public class class_videoPlayer : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		
+		enum_playerState = PlayerStateEnum.stopped;
+		videoPlayer = GetComponent<VideoPlayer>();
 	}
 
 	public void play()
 	{
-		
+		if(!videoPlayer.isPlaying)
+			videoPlayer.Play();
 	}
 
 	public void pause()
 	{
-		
+		if(videoPlayer.isPlaying)
+			videoPlayer.Pause();
 	}
 
 	public void stop()
 	{
-		
-	}
-	
-	// Update is called once per frame
-	void Update()
-	{
-		
+		if(videoPlayer.isPlaying)
+			videoPlayer.Stop();
 	}
 }

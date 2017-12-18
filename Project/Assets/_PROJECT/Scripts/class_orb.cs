@@ -17,17 +17,18 @@ public class class_orb : MonoBehaviour
 	{
 		/// Get the renderer of the ball
 		rend = GetComponent<Renderer>();
-		int_id = -1;
 	}
 
 	public void fn_initOrb()
 	{
+		Debug.Log("Initializing Orb: " + int_id);
 		rend.material = mat_normal;
 	}
 
 	public void fn_click()
 	{
 		audioSource.Play();
+		rend.material = mat_normal;
 		GO_gameLogic.GetComponent<class_gameLogic>().fn_clickedOrb(this.transform.position, int_id);
 	}
 

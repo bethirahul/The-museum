@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using NUnit.Framework.Internal.Commands;
+using UnityEngine.Video;
 
 public class class_gameLogic : MonoBehaviour
 {
@@ -15,8 +16,9 @@ public class class_gameLogic : MonoBehaviour
 
 	public GameObject GO_welcomeScreen;
 	public GameObject GO_infoScreen1;
-	public GameObject GO_infoScreen2;
 	public GameObject GO_exitScreen;
+
+	public GameObject[] arr_GO_screen;
 
 	
 	//   S T A R T                                                                                                      
@@ -34,7 +36,6 @@ public class class_gameLogic : MonoBehaviour
 
 		GO_welcomeScreen.SetActive(true);
 		GO_infoScreen1.SetActive(false);
-		GO_infoScreen2.SetActive(false);
 	}
 
 	//   B U T T O N S       
@@ -51,7 +52,6 @@ public class class_gameLogic : MonoBehaviour
 	{
 		GO_infoScreen1.SetActive(false);
 		GO_exitScreen.SetActive(false);
-		GO_infoScreen2.SetActive(true);
 		int_playerPos = 0;
 		fn_movePlayer(arr_GO_orb[1].transform.position, 1);
 	}
@@ -62,23 +62,36 @@ public class class_gameLogic : MonoBehaviour
 		Application.Quit();
 	}
 
-	public void fn_clickedOrb(Vector3 p_point, int p_int_id)
+	public void fn_clickedOrb(Vector3 p_point, int p_int_id) //  1 
 	{
 		fn_disableAllOrbs();
+		fn_pauseAllVideos();
+		if(p_int_id == 8)
+		{
+			GO_welcomeScreen.SetActive(false);
+			GO_exitScreen.SetActive(false);
+		}
 		fn_movePlayer(p_point, p_int_id);
 	}
 
-	private void fn_movePlayer(Vector3 p_point, int p_int_id)
+	private void fn_pauseAllVideos() //  2 
+	{
+		for(int i = 0; i < arr_GO_screen.Length; i++)
+			arr_GO_screen[i].GetComponent<VideoPlayer>().Pause();
+	}
+
+	private void fn_movePlayer(Vector3 p_point, int p_int_id) //  3 
 	{
 		int_playerLastPos = int_playerPos;
 		int_playerPos     = p_int_id;
+		Debug.Log("Moving to " + int_playerPos);
 
 		fn_iTweenPlayerToPoint(p_point);
 	}
 
 	//   P L A Y E R   M O V E M E N T   //
 	/// iTween movement to a point
-	private void fn_iTweenPlayerToPoint(Vector3 p_point)
+	private void fn_iTweenPlayerToPoint(Vector3 p_point) //  4 
 	{
 		p_point.y = float_playerHeight;
 		
@@ -95,12 +108,16 @@ public class class_gameLogic : MonoBehaviour
 		);
 	}
 
-	public void fn_checkMovement()
+	public void fn_checkMovement() //  5 
 	{
 		if(int_playerPos == 2 || int_playerPos == 7)
 		{
+			
 			if(int_playerLastPos == int_playerPos - 1)
+			{
+				Debug.Log("Reached " + int_playerPos + ", Moving to " + (int_playerPos + 1));
 				fn_movePlayer(arr_GO_orb[int_playerPos + 1].transform.position, int_playerPos + 1);
+			}
 			else
 				fn_movePlayer(arr_GO_orb[int_playerPos - 1].transform.position, int_playerPos - 1);
 		}
@@ -132,17 +149,16 @@ public class class_gameLogic : MonoBehaviour
 		if(l_int_nextOrbID != 1)
 		{
 			arr_GO_orb[l_int_nextOrbID].SetActive(true);
-			arr_GO_orb[l_int_nextOrbID].GetComponent<class_orb>().fn_initOrb();
+			///arr_GO_orb[l_int_nextOrbID].GetComponent<class_orb>().fn_initOrb();
 		}
 		arr_GO_orb[l_int_prevOrbID].SetActive(true);
-		arr_GO_orb[l_int_prevOrbID].GetComponent<class_orb>().fn_initOrb();
+		///arr_GO_orb[l_int_prevOrbID].GetComponent<class_orb>().fn_initOrb();
 
 		if(l_int_nextOrbID == 1)
 		{
 			GO_welcomeScreen.SetActive(true);
 			GO_exitScreen.SetActive(true);
 		}
-
 		fn_playVideo();
 	}
 
@@ -154,7 +170,16 @@ public class class_gameLogic : MonoBehaviour
 
 	private void fn_playVideo()
 	{
-		
+		if(int_playerPos == 1)
+		{
+			arr_GO_screen[0].GetComponent<VideoPlayer>().Play();
+			Debug.Log("Video playing on Screen: 0");
+		}
+		else if(int_playerPos >= 3 && int_playerPos <= 6)
+		{
+			arr_GO_screen[int_playerPos - 2].GetComponent<VideoPlayer>().Play();
+			Debug.Log("Video playing on Screen: " + (int_playerPos - 2));
+		}
 	}
 	
 	//   U P D A T E                                                                                                    
