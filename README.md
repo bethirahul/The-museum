@@ -1,5 +1,5 @@
-# The-museum
-The Museum - Android VR app
+# VR-museum
+VR Museum - Android VR app
 Made by Rahul Bethi
 Part of VR Developer Udacity Nano-degree
 
