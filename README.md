@@ -3,7 +3,9 @@ VR Museum - Android VR app
 Made by Rahul Bethi
 Part of VR Developer Udacity Nano-degree
 
-**** THis project is moved to Google Drive - Due to 100MB upload limit of GitHub.
+Please read more about the project at: https://medium.com/@rahulbethi/vr-museum-healthcare-a2527c214e4b
+
+**** This project is moved to Google Drive - Due to 100MB upload limit of GitHub.
 
 Google Drive: https://drive.google.com/open?id=174JLk05kT-JtUDJ_78JLPVP6_VYzPwdu
 
